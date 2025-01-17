@@ -3,11 +3,9 @@
 import { SignInButton, SignUpButton, UserButton, useClerk } from "@clerk/nextjs";
 import { SearchInput } from "./search-input";
 import { Button } from "@/components/ui/button";
-import { useApiMutation } from "@/hooks/use-api-mutation";
 import { api } from "@/convex/_generated/api";
 import { toast } from "sonner";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
 
 import * as React from "react"
 import Link from "next/link"
@@ -18,15 +16,13 @@ import {
     DialogContent,
     DialogTrigger,
 } from "@/components/ui/dialog"
-import { Loading } from "@/components/auth/loading";
+import { Loading } from "@/components/Loading";
 import { useQuery } from "convex/react";
 import { Filter, Heart, MessageCircle } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 // import { ListItem } from "./list-item";
 import { TooltipProvider } from "./tooltip-provider";
 import { ListItem } from "./list-item";
-import ConnectStripe from "./connect-stripe";
-
 
 const Navbar = () => {
     const categories = useQuery(api.categories.get);
