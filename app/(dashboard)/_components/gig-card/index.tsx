@@ -1,10 +1,9 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useAuth } from "@clerk/nextjs";
 import { formatDistanceToNow } from "date-fns";
-import { Actions } from "@/components/actions";
+import { Actions } from "@/components/Actions";
 import { MoreHorizontal } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ConvexImage } from "@/components/convex-image";
