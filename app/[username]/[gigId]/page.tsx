@@ -1,4 +1,5 @@
-"use client";
+"use client";;
+import { use } from "react";
 
 import { useQuery } from "convex/react"
 import { Header } from "./_components/header"
@@ -15,15 +16,14 @@ import { AddReview } from "../_components/reviews/add-review";
 
 
 interface PageProps {
-    params: {
+    params: Promise<{
         username: string
         gigId: string
-    }
+    }>
 }
 
-const GigPage = ({
-    params
-}: PageProps) => {
+const GigPage = (props: PageProps) => {
+    const params = use(props.params);
     const gig = useQuery(api.gig.get, { id: params.gigId as Id<"gigs"> });
     //const seller = useQuery(api.users.getUserByUsername, { username: params.username });
     const categoryAndSubcategory = useQuery(api.gig.getCategoryAndSubcategory, { gigId: params.gigId as Id<"gigs"> });

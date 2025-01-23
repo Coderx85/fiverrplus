@@ -1,14 +1,15 @@
 "use client";
 
-import { SignInButton, SignUpButton, UserButton, useClerk } from "@clerk/nextjs";
+// Import necessary components and hooks from various libraries
+import { SignInButton, SignUpButton, UserButton } from "@clerk/nextjs";
 import { SearchInput } from "./search-input";
 import { Button } from "@/components/ui/button";
 import { api } from "@/convex/_generated/api";
 import { toast } from "sonner";
-import { useRouter, useSearchParams } from "next/navigation";
 
 import * as React from "react"
 import Link from "next/link"
+import { useRouter, useSearchParams } from "next/navigation"
 
 import {
     Dialog,
@@ -20,27 +21,30 @@ import { Loading } from "@/components/Loading";
 import { useQuery } from "convex/react";
 import { Filter, Heart, MessageCircle } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
-// import { ListItem } from "./list-item";
 import { TooltipProvider } from "./tooltip-provider";
 import { ListItem } from "./list-item";
 
 const Navbar = () => {
+    // Fetch categories and current user data using custom hooks
     const categories = useQuery(api.categories.get);
     const currentUser = useQuery(api.users.getCurrentUser);
+    const router = useRouter();
+    
     const searchParams = useSearchParams();
     const favorites = searchParams.get("favorites");
     const filter = searchParams.get("filter");
 
-    const router = useRouter();
-
+    // Show loading spinner if categories data is not yet available
     if (categories === undefined) {
         return <Loading />;
     }
 
+    // Navigate to inbox page
     const onClickInbox = () => {
         router.push("/inbox");
     }
 
+    // Clear all filters and navigate to home page
     const clearFilters = () => {
         router.push("/");
     }
@@ -61,7 +65,6 @@ const Navbar = () => {
                         </TooltipProvider>
                     </DialogTrigger>
                     <DialogContent className="overflow-y-auto max-h-[calc(100vh-200px)]">
-                        {/* <ScrollArea className="rounded-md border"> */}
                         <DialogClose>
                             <>
                                 <Button
@@ -89,7 +92,6 @@ const Navbar = () => {
                             </>
                         </DialogClose>
                     </DialogContent>
-                    {/* </ScrollArea> */}
                 </Dialog>
 
                 {currentUser && (
@@ -123,7 +125,8 @@ const Navbar = () => {
                             Switch To Selling
                         </Button>
                         {!currentUser.stripeAccountSetupComplete &&
-                            <ConnectStripe />
+                            <>
+                            </>
                         }
                         <UserButton />
                     </>
@@ -136,7 +139,6 @@ const Navbar = () => {
                         <Button variant="ghost" asChild>
                             <SignInButton mode="modal" />
                         </Button>
-
                     </>
                 )}
             </div >
