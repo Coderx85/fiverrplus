@@ -1,16 +1,16 @@
-"use client";
+"use client";;
+import { use } from "react";
 
 import { CreateForm } from "./_components/create-form";
 
 interface CreateGigProps {
-    params: {
+    params: Promise<{
         username: string;
-    }
+    }>
 }
 
-const CreateGig = ({
-    params
-}: CreateGigProps) => {
+const CreateGig = (props: CreateGigProps) => {
+    const params = use(props.params);
     return (
         <div className="flex justify-center">
             <CreateForm
