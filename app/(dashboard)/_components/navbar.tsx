@@ -5,7 +5,6 @@ import { SignInButton, SignUpButton, UserButton } from "@clerk/nextjs";
 import { SearchInput } from "./search-input";
 import { Button } from "@/components/ui/button";
 import { api } from "@/convex/_generated/api";
-import { toast } from "sonner";
 
 import * as React from "react"
 import Link from "next/link"
