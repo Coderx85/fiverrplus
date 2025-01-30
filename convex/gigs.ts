@@ -1,6 +1,7 @@
 import { v } from "convex/values";
 import { query } from "./_generated/server";
 
+// Query to get gigs based on search, favorites, and filter parameters
 export const get = query({
     args: {
         search: v.optional(v.string()),
@@ -14,6 +15,7 @@ export const get = query({
 
         let gigs = [];
 
+        // If search title is provided, search gigs by title
         if (title) {
             gigs = await ctx.db
                 .query("gigs")
@@ -23,6 +25,7 @@ export const get = query({
                 )
                 .collect();
         } else {
+            // Otherwise, get all published gigs
             gigs = await ctx.db
                 .query("gigs")
                 .withIndex("by_published", (q) => q.eq("published", true))
@@ -30,10 +33,9 @@ export const get = query({
                 .collect();
         }
 
-        // check if there is filter
+        // If filter is provided, filter gigs by subcategory
         if (args.filter !== undefined) {
             const filter = args.filter as string;
-            // get subcategory by name
             const subcategory = await ctx.db
                 .query("subcategories")
                 .withIndex("by_name", (q) => q.eq("name", filter))
@@ -45,6 +47,7 @@ export const get = query({
 
         let gigsWithFavoriteRelation = gigs;
 
+        // If user is authenticated, check if gigs are favorited by the user
         if (identity !== null) {
             gigsWithFavoriteRelation = await Promise.all(gigs.map((gig) => {
                 return ctx.db
@@ -65,9 +68,7 @@ export const get = query({
             }));
         }
 
-        //const gigsWithFavorite = await Promise.all(gigsWithFavoriteRelation);
-
-
+        // Get images, seller, reviews, and offers for each gig
         const gigsWithImages = await Promise.all(gigsWithFavoriteRelation.map(async (gig) => {
             const image = await ctx.db
                 .query("gigMedia")
@@ -103,7 +104,7 @@ export const get = query({
     },
 });
 
-
+// Query to get gigs by seller's username
 export const getBySellerName = query({
     args: {
         sellerName: v.string(),
@@ -127,7 +128,7 @@ export const getBySellerName = query({
     },
 });
 
-
+// Query to get gigs with images by seller's username
 export const getGigsWithImages = query({
     args: { sellerUsername: v.string() },
     handler: async (ctx, args) => {
@@ -148,9 +149,8 @@ export const getGigsWithImages = query({
             throw new Error("Gigs not found");
         }
 
+        // Get images for each gig
         const gigsWithImages = await Promise.all(gigs.map(async (gig) => {
-
-            // get images
             const images = await ctx.db.query("gigMedia")
                 .withIndex("by_gigId", (q) => q.eq("gigId", gig._id))
                 .collect();
@@ -175,8 +175,7 @@ export const getGigsWithImages = query({
     },
 });
 
-
-
+// Query to get gigs with order amount and revenue for authenticated user
 export const getGigsWithOrderAmountAndRevenue = query({
     handler: async (ctx) => {
         const identity = await ctx.auth.getUserIdentity();
@@ -202,6 +201,7 @@ export const getGigsWithOrderAmountAndRevenue = query({
             .order("desc")
             .collect();
 
+        // Get order amount for each gig
         const gigsWithOrderAmount = await Promise.all(
             gigs.map(async (gig) => {
                 const orders = await ctx.db
@@ -218,6 +218,7 @@ export const getGigsWithOrderAmountAndRevenue = query({
             })
         );
 
+        // Get total revenue for each gig
         const gigsWithOrderAmountAndRevenue = await Promise.all(
             gigsWithOrderAmount.map(async (gig) => {
                 const offers = await ctx.db
@@ -234,7 +235,7 @@ export const getGigsWithOrderAmountAndRevenue = query({
             })
         );
 
-        // get images
+        // Get images for each gig
         const gigsFull = await Promise.all(gigsWithOrderAmountAndRevenue.map(async (gig) => {
             const image = await ctx.db
                 .query("gigMedia")
@@ -254,9 +255,6 @@ export const getGigsWithOrderAmountAndRevenue = query({
             };
         }));
 
-
-
-
-        return gigsFull
+        return gigsFull;
     },
 });

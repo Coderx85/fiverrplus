@@ -27,16 +27,16 @@ export const SearchInput = () => {
         router.push(url);
     };
 
-    // useEffect(() => {
-    //     const url = qs.stringifyUrl({
-    //         url: "/",
-    //         query: { 
-    //         search: debouncedValue[0],
-    //         },
-    //     }, {skipEmptyString: true, skipNull: true});
+    useEffect(() => {
+        const url = qs.stringifyUrl({
+            url: "/",
+            query: { 
+            search: debouncedValue[0],
+            },
+        }, {skipEmptyString: true, skipNull: true});
 
-    //     router.push(url);
-    // }, [debouncedValue, router]);
+        router.push(url);
+    }, [debouncedValue, router]);
 
     return (
         <div className="w-full relative flex">
