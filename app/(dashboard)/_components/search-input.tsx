@@ -27,17 +27,6 @@ export const SearchInput = () => {
         router.push(url);
     };
 
-    useEffect(() => {
-        const url = qs.stringifyUrl({
-            url: "/",
-            query: { 
-            search: debouncedValue[0],
-            },
-        }, {skipEmptyString: true, skipNull: true});
-
-        router.push(url);
-    }, [debouncedValue, router]);
-
     return (
         <div className="w-full relative flex">
             <Search className="absolute top-1/2 left-3 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
