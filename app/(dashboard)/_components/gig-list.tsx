@@ -5,8 +5,7 @@ import { useQuery } from "convex/react";
 import { EmptySearch } from "./empty-search";
 import { EmptyFavorites } from "./empty-favorites";
 import { GigCard } from "./gig-card";
-import { Loading } from "@/components/auth/loading";
-import { Doc, Id } from "@/convex/_generated/dataModel";
+import { Loading } from "@/components/Loading";
 import { FullGigType } from "@/types";
 import { useEffect, useState } from "react";
 
@@ -34,9 +33,7 @@ export const GigList = ({
     }, [query.favorites, gigs]);
 
     if (gigs === undefined) {
-        return (
-            <>Loading gigs...</>
-        )
+        return <Loading />
     }
 
     if (!gigs?.length && query.search) {
