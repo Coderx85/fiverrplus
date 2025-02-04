@@ -3,6 +3,7 @@ import { action, internalMutation, internalQuery, mutation, query } from "./_gen
 import Stripe from "stripe";
 import { api, internal } from "./_generated/api";
 
+// Store user information in the database
 export const store = mutation({
     args: {},
     handler: async (ctx) => {
@@ -40,7 +41,7 @@ export const store = mutation({
     },
 });
 
-
+// Get the current authenticated user
 export const getCurrentUser = query({
     handler: async (ctx) => {
         const identity = await ctx.auth.getUserIdentity();
@@ -49,7 +50,6 @@ export const getCurrentUser = query({
             return null;
         }
 
-        // throw new Error("Unauthenticated call to query");
         const user = await ctx.db
             .query("users")
             .withIndex("by_token", (q) =>
@@ -61,7 +61,7 @@ export const getCurrentUser = query({
     }
 });
 
-
+// Get user by ID
 export const get = query({
     args: { id: v.id("users") },
     handler: async (ctx, args) => {
@@ -70,7 +70,7 @@ export const get = query({
     },
 });
 
-
+// Get Stripe account ID for a user
 export const getStripeAccountId = internalQuery({
     args: { userId: v.id("users") },
     handler: async (ctx, args) => {
@@ -82,7 +82,7 @@ export const getStripeAccountId = internalQuery({
     },
 });
 
-
+// Create a Stripe account for the user
 export const createStripe = action({
     args: {},
     handler: async (ctx, args) => {
@@ -110,7 +110,6 @@ export const createStripe = action({
             await ctx.runMutation(internal.users.setStripeAccountId, { userId: user._id, stripeAccountId: accountId });
         }
 
-
         const accountLink = await stripe.accountLinks.create({
             account: accountId,
             refresh_url: process.env.NEXT_PUBLIC_HOSTING_URL,
@@ -122,7 +121,7 @@ export const createStripe = action({
     },
 });
 
-
+// Set Stripe account ID for a user
 export const setStripeAccountId = internalMutation({
     args: { userId: v.id("users"), stripeAccountId: v.string() },
     handler: async (ctx, args) => {
@@ -134,7 +133,7 @@ export const setStripeAccountId = internalMutation({
     },
 });
 
-
+// Update Stripe setup status for a user
 export const updateStripeSetup = internalMutation({
     args: { id: v.id("users"), stripeAccountSetupComplete: v.boolean() },
     handler: async (ctx, args) => {
@@ -142,7 +141,7 @@ export const updateStripeSetup = internalMutation({
     },
 });
 
-
+// Get user by username
 export const getUserByUsername = query({
     args: { username: v.optional(v.string()) },
     handler: async (ctx, args) => {
@@ -157,7 +156,7 @@ export const getUserByUsername = query({
     },
 });
 
-
+// Get languages by username
 export const getLanguagesByUsername = query({
     args: { username: v.string() },
     handler: async (ctx, args) => {
@@ -179,6 +178,7 @@ export const getLanguagesByUsername = query({
     },
 });
 
+// Get country by username
 export const getCountryByUsername = query({
     args: { username: v.string() },
     handler: async (ctx, args) => {
