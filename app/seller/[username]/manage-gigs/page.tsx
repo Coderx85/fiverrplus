@@ -10,7 +10,7 @@ import { GigList } from "./_components/gig-list";
 import { Separator } from "@/components/ui/separator";
 
 import { GigData, columns } from "./_components/columns";
-import { Loading } from "@/components/auth/loading";
+import { Loading } from "@/components/Loading";
 import { DataTable } from "./_components/data-table";
 
 
