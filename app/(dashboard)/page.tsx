@@ -1,23 +1,21 @@
 "use client";
 
-import { useConvexAuth, useMutation } from "convex/react";
+import {useMutation } from "convex/react";
 import { GigList } from "./_components/gig-list";
-import { useUser } from "@clerk/nextjs";
-import { useEffect, useState, use } from "react";
-import { Id } from "@/convex/_generated/dataModel";
+import { useEffect } from "react";
 import { api } from "@/convex/_generated/api";
-import { useRouter } from "next/navigation";
 
 interface DashboardProps {
-    searchParams: Promise<{
+    searchParams: {
         search?: string;
         favorites?: string;
         filter?: string;
-    }>;
+    };
 };
 
-const Dashboard = (props: DashboardProps) => {
-    const searchParams = use(props.searchParams);
+const Dashboard = ({
+    searchParams
+}: DashboardProps) => {
     const store = useMutation(api.users.store);
     useEffect(() => {
         const storeUser = async () => {
