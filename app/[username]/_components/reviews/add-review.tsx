@@ -3,7 +3,6 @@
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 import { useApiMutation } from "@/hooks/use-api-mutation";
-import { useState } from "react";
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -55,7 +54,6 @@ export const AddReview = ({
 }: AddReviewProps) => {
     const {
         mutate,
-        pending
     } = useApiMutation(api.reviews.add);
 
     // Define your form.
@@ -81,12 +79,9 @@ export const AddReview = ({
             recommend_to_a_friend: values.recommend_to_a_friend, // Parse as integer
             communication_level: values.communication_level, // Parse as integer
         })
-            .then(() => {
-                // Handle success
-            })
-            .catch((error) => {
-                // Handle error
-            });
+        .catch((error) => {
+            console.error(error.message);
+        });
         form.reset();
     }
 

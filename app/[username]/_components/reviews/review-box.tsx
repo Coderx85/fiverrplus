@@ -1,23 +1,19 @@
 import React from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Doc } from "@/convex/_generated/dataModel";
 import { ReviewFullType } from "@/types";
-import { formatDistanceToNow } from 'date-fns'; // Importing formatDistanceToNow function
-import { Star } from 'lucide-react'; // Importing Star component from Lucide
+import { formatDistanceToNow } from 'date-fns'; 
+import { Star } from 'lucide-react'; 
 import { Separator } from '@/components/ui/separator';
 import Image from 'next/image';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
-import { Card, CardContent } from '@/components/ui/card';
 
 interface ReviewBoxProps {
     review: ReviewFullType;
 }
 
 export const ReviewBox = ({ review }: ReviewBoxProps) => {
-    // Calculate average review score
     const averageScore = (review.communication_level + review.recommend_to_a_friend + review.service_as_described) / 3;
 
-    // Calculate distance to now from review creation time
     const distanceToNow = formatDistanceToNow(new Date(review._creationTime), { addSuffix: true });
 
     return (

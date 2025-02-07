@@ -11,9 +11,7 @@ import { Images } from "../../../components/images";
 import { Description } from "@/components/description";
 import { Info } from "lucide-react";
 import { SellerDetails } from "./_components/seller-details";
-import { Reviews } from "../_components/reviews/reviews";
 import { AddReview } from "../_components/reviews/add-review";
-
 
 interface PageProps {
     params: Promise<{
@@ -25,7 +23,6 @@ interface PageProps {
 const GigPage = (props: PageProps) => {
     const params = use(props.params);
     const gig = useQuery(api.gig.get, { id: params.gigId as Id<"gigs"> });
-    //const seller = useQuery(api.users.getUserByUsername, { username: params.username });
     const categoryAndSubcategory = useQuery(api.gig.getCategoryAndSubcategory, { gigId: params.gigId as Id<"gigs"> });
     const offers = useQuery(api.offers.get, { gigId: params.gigId as Id<"gigs"> });
     const reviews = useQuery(api.reviews.getByGig, { gigId: params.gigId as Id<"gigs"> });
@@ -64,12 +61,10 @@ const GigPage = (props: PageProps) => {
                         title={gig.title}
                         allowDelete={false}
                     />
-                    {/* <h2 className="font-semibold">About this gig</h2> */}
                     <Description
                         editable={false}
                         initialContent={gig.description}
                         gigId={gig._id}
-                    //className="pb-40 2xl:px-[200px] xl:px-[90px] xs:px-[17px]"
                     />
                     <div className="border border-zinc-400 p-4 space-y-2 rounded-2xl">
                         <div className="flex space-x-2">
@@ -84,11 +79,6 @@ const GigPage = (props: PageProps) => {
                         lastFulFilmentTime={gig.lastFulfilment?.fulfilmentTime}
                         languages={gig.seller.languages}
                     />
-                    {/* 
-                    <Reviews
-                        reviews={reviewsFull}
-                    />
-                     */}
                     <AddReview
                         gigId={gig._id}
                         sellerId={gig.seller._id}

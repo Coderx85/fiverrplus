@@ -6,7 +6,6 @@ import { useAction, useQuery } from "convex/react"
 import { Clock, RefreshCcw } from "lucide-react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { toast } from "sonner"
 
 interface OffersProps {
     offer: Doc<"offers">
@@ -33,8 +32,8 @@ export const Content = ({
             const url = await orderNow({ priceId: offer.stripePriceId, title: offer.title, sellerId });
             if (!url) throw new Error("Error: Stripe session error.");
             router.push(url);
-        } catch (error: any) {
-            toast.error(error.message);
+        } catch (error) {
+            console.log(error)
         }
     }
 
