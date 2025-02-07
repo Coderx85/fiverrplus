@@ -15,7 +15,6 @@ interface GigActionsCellProps {
 const GigActionsCell = ({ gigId, username }: GigActionsCellProps) => {
     const {
         mutate: remove,
-        pending: removePending,
     } = useApiMutation(api.gig.remove);
 
     const handleDelete = () => {

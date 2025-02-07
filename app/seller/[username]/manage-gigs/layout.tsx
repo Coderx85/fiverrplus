@@ -1,5 +1,3 @@
-import { Metadata } from "next"
-
 interface SettingsLayoutProps {
     children: React.ReactNode
 }

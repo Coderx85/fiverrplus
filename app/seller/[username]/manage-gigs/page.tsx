@@ -6,7 +6,6 @@ import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { Button } from "@/components/ui/button";
 
-import { GigList } from "./_components/gig-list";
 import { Separator } from "@/components/ui/separator";
 
 import { GigData, columns } from "./_components/columns";
@@ -45,7 +44,7 @@ const ManageGigs = () => {
                         Manage, create and edit your gigs and offers.
                     </p>
                 </div>
-                <Button className="ml-auto" variant={"blue"}>
+                <Button className="ml-auto" variant={"secondary"}>
                     <Link href={`/seller/${currentUser?.username}/manage-gigs/create`}>Create</Link>
                 </Button>
             </div>

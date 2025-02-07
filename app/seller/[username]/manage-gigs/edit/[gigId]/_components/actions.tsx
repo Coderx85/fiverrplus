@@ -1,21 +1,13 @@
 "use client";
 
 import { toast } from "sonner";
-import { Link2, Pencil, Trash2 } from "lucide-react";
+import { Trash2 } from "lucide-react";
 import { DropdownMenuContentProps } from "@radix-ui/react-dropdown-menu";
 
 import { ConfirmModal } from "@/components/confirm-modal";
-import {
-    DropdownMenu,
-    DropdownMenuTrigger,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuSeparator,
-} from "@/components/ui/dropdown-menu";
 import { api } from "@/convex/_generated/api";
 import { useApiMutation } from "@/hooks/use-api-mutation";
 import { Button } from "@/components/ui/button";
-// import { useRenameModal } from "@/store/use-rename-modal";
 
 interface ActionsProps {
     children: React.ReactNode;
@@ -25,12 +17,8 @@ interface ActionsProps {
 };
 
 export const Actions = ({
-    children,
-    side,
-    sideOffset,
     storageId,
 }: ActionsProps) => {
-    // const { onOpen } = useRenameModal();
     const { mutate, pending } = useApiMutation(api.gigMedia.remove);
 
     const onDelete = () => {
