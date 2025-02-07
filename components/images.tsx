@@ -7,11 +7,10 @@ import {
     CarouselNext,
     CarouselPrevious,
 } from "@/components/ui/carousel"
-import { Doc } from "@/convex/_generated/dataModel"
 import { ImageWithUrlType } from "@/types"
 import Image from "next/image"
 import { AspectRatio } from "@/components/ui/aspect-ratio"
-import { MoreHorizontal, Trash2 } from "lucide-react"
+import { Trash2 } from "lucide-react"
 import { Actions } from "@/app/seller/[username]/manage-gigs/edit/[gigId]/_components/actions"
 import { useState } from "react"
 
@@ -30,10 +29,13 @@ export const Images = ({
 }: ImagesProps) => {
     const [isHovered, setIsHovered] = useState(false);
     return (
-        <Carousel className="select-none" onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}>
+        <Carousel 
+            className="select-none" 
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+        >
             <CarouselContent className={className || ""}>
-                {images.map((image) => {
+                {isHovered && images.map((image) => {
                     return (
                         <CarouselItem
                             key={image._id}
