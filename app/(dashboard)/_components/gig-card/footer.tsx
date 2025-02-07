@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 import { Heart, Star } from "lucide-react";
 
 interface FooterProps {
-    isFavorite: boolean;
+    isFavorite?: boolean;
     title: string;
     ownerLabel: string;
     createdAtLabel: string;
